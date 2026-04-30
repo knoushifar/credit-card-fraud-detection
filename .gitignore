@@ -1,0 +1,31 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# macOS
+.DS_Store
+
+# IDE/editor files
+.vscode/
+.idea/
+.qodo/
+
+# Logs
+*.log
+
+# Data files generated locally
+*.csv
+*.xlsx
+*.parquet
+*.pkl
+*.joblib
