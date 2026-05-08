@@ -38,11 +38,54 @@ The models are evaluated using both standard and operational metrics:
 
 **Card Precision@k** measures how many of the top `k` flagged cardholders are truly compromised, making it useful for real-world fraud investigation workflows where analysts can only inspect a limited number of cases per day.
 
+
+## Visual Analysis
+
+### 1. Transaction Amount Distribution
+
+![Transaction Distributions](assets/transaction_distributions.png)
+
+Transaction amounts are highly right-skewed: most transactions are small or medium-sized, while a small number are very large. This is typical for financial transaction data and motivates feature scaling or transformations for modeling.
+
+---
+
+### 2. Fraudulent Transactions Over Time
+
+![Fraud Activity Over Time](assets/fraud_activity_over_time.png)
+
+The total number of transactions per day remains relatively stable, while fraudulent transactions and compromised cards fluctuate daily.  
+
+- Highlights the **class imbalance problem** (frauds are rare).  
+- Shows the need for **specialized metrics** like Average Precision or Card Precision@100 for evaluation.
+
+---
+
+### 3. Chronological Train / Delay / Test Split
+
+![Train Delay Test Split](assets/train_delay_test_split.png)
+
+The dataset is split **chronologically** into training, delay, and test periods to simulate real-world scenarios:  
+
+- The **delay period** models fraud confirmation lag.  
+- Prevents **future information leakage**, ensuring realistic model evaluation.
+
+---
+
 ## Key Results
 
 Based on the project report, all models performed significantly better than random guessing. Test-set AUC ROC scores ranged from approximately **0.846 to 0.899**, and Average Precision ranged from approximately **0.506 to 0.777**.
 
 Random Forest achieved the best Average Precision, while Logistic Regression provided a strong balance between performance and computational efficiency.
+
+| Model                   | AUC ROC | Average Precision | Card Precision@100 |
+|-------------------------|---------|-----------------|------------------|
+| Logistic Regression     | 0.899   | 0.739           | 0.110            |
+| Decision Tree Depth 2   | 0.846   | 0.619           | 0.100            |
+| Decision Tree Unlimited | 0.863   | 0.506           | 0.101            |
+| Random Forest           | 0.897   | 0.777           | 0.110            |
+| Gradient Boosting       | 0.866   | 0.736           | 0.107            |
+
+---
 
 ## Repository Structure
 
@@ -51,15 +94,18 @@ credit-card-fraud-detection/
 │
 ├── notebooks/
 │   └── fraud_detection_pipeline.ipynb
-│
+├── assets/
+│   ├── transaction_distributions.png
+│   ├── fraud_activity_over_time.png
+│   └── train_delay_test_split.png
 ├── docs/
 │   └── fraud_detection_report.pdf
-│
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
 └── LICENSE
-```
+
+---
 
 ## Installation
 
